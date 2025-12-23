@@ -3,20 +3,72 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/loginFragment">
 
     <!-- Authentication Flow -->
     <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.simats.aspirebridge.ui.auth.SplashFragment"
-        android:label="Splash"
-        tools:layout="@layout/fragment_splash">
+        android:id="@+id/loginFragment"
+        android:name="com.simats.aspirebridge.ui.auth.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_splash_to_onboarding"
-            app:destination="@id/onboardingFragment" />
+            android:id="@+id/action_login_to_user_type_selection"
+            app:destination="@id/userTypeSelectionFragment" />
         <action
-            android:id="@+id/action_splash_to_main"
+            android:id="@+id/action_login_to_forgot_password"
+            app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_login_to_main"
             app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_login_to_admin_login"
+            app:destination="@id/adminLoginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userTypeSelectionFragment"
+        android:name="com.simats.aspirebridge.ui.auth.UserTypeSelectionFragment"
+        android:label="User Type Selection"
+        tools:layout="@layout/fragment_user_type_selection">
+        <action
+            android:id="@+id/action_user_type_selection_to_login"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_user_type_selection_to_register_aspirant"
+            app:destination="@id/registerAspirantFragment" />
+        <action
+            android:id="@+id/action_user_type_selection_to_register_achiever"
+            app:destination="@id/registerAchieverFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerAspirantFragment"
+        android:name="com.simats.aspirebridge.ui.auth.RegisterAspirantFragment"
+        android:label="Register Aspirant"
+        tools:layout="@layout/fragment_register_aspirant">
+        <action
+            android:id="@+id/action_register_aspirant_to_otp_verification"
+            app:destination="@id/otpVerificationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerAchieverFragment"
+        android:name="com.simats.aspirebridge.ui.auth.RegisterAchieverFragment"
+        android:label="Register Achiever"
+        tools:layout="@layout/fragment_register_achiever">
+        <action
+            android:id="@+id/action_register_achiever_to_otp_verification"
+            app:destination="@id/otpVerificationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/otpVerificationFragment"
+        android:name="com.simats.aspirebridge.ui.auth.OtpVerificationFragment"
+        android:label="OTP Verification"
+        tools:layout="@layout/fragment_otp_verification">
+        <action
+            android:id="@+id/action_otp_verification_to_onboarding"
+            app:destination="@id/onboardingFragment" />
     </fragment>
 
     <fragment
@@ -25,34 +77,8 @@
         android:label="Onboarding"
         tools:layout="@layout/fragment_onboarding">
         <action
-            android:id="@+id/action_onboarding_to_login"
-            app:destination="@id/loginFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.simats.aspirebridge.ui.auth.LoginFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_login_to_register"
-            app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/action_login_to_forgot_password"
-            app:destination="@id/forgotPasswordFragment" />
-        <action
-            android:id="@+id/action_login_to_main"
+            android:id="@+id/action_onboarding_to_main"
             app:destination="@id/nav_home" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/registerFragment"
-        android:name="com.simats.aspirebridge.ui.auth.RegisterFragment"
-        android:label="Register"
-        tools:layout="@layout/fragment_register">
-        <action
-            android:id="@+id/action_register_to_profile_setup"
-            app:destination="@id/profileSetupFragment" />
     </fragment>
 
     <fragment
@@ -83,7 +109,119 @@
         <action
             android:id="@+id/action_home_to_recent_activity"
             app:destination="@id/recentActivityFragment" />
+        <action
+            android:id="@+id/action_home_to_explore_jobs"
+            app:destination="@id/exploreJobsFragment" />
+        <action
+            android:id="@+id/action_home_to_success_stories"
+            app:destination="@id/successStoriesFragment" />
+        <action
+            android:id="@+id/action_home_to_resource_hub"
+            app:destination="@id/resourceHubFragment" />
+        <action
+            android:id="@+id/action_home_to_admin_dashboard"
+            app:destination="@id/adminDashboardFragment" />
     </fragment>
+
+    <!-- Success Stories Flow -->
+    <fragment
+        android:id="@+id/successStoriesFragment"
+        android:name="com.simats.aspirebridge.ui.stories.SuccessStoriesFragment"
+        android:label="Success Stories"
+        tools:layout="@layout/fragment_success_stories">
+        <action
+            android:id="@+id/action_success_stories_to_story_detail"
+            app:destination="@id/successStoryDetailFragment" />
+        <action
+            android:id="@+id/action_success_stories_to_create_story"
+            app:destination="@id/createSuccessStoryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/successStoryDetailFragment"
+        android:name="com.simats.aspirebridge.ui.stories.SuccessStoryDetailFragment"
+        android:label="Success Story"
+        tools:layout="@layout/fragment_success_story_detail">
+        <argument
+            android:name="storyId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createSuccessStoryFragment"
+        android:name="com.simats.aspirebridge.ui.stories.CreateSuccessStoryFragment"
+        android:label="Share Your Success"
+        tools:layout="@layout/fragment_create_success_story" />
+
+    <!-- Resource Hub Flow -->
+    <fragment
+        android:id="@+id/resourceHubFragment"
+        android:name="com.simats.aspirebridge.ui.resources.ResourceHubFragment"
+        android:label="Resource Hub"
+        tools:layout="@layout/fragment_resource_hub">
+        <action
+            android:id="@+id/action_resource_hub_to_resource_detail"
+            app:destination="@id/resourceDetailFragment" />
+        <action
+            android:id="@+id/action_resource_hub_to_upload_resource"
+            app:destination="@id/uploadResourceFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/resourceDetailFragment"
+        android:name="com.simats.aspirebridge.ui.resources.ResourceDetailFragment"
+        android:label="Resource"
+        tools:layout="@layout/fragment_resource_detail">
+        <argument
+            android:name="resourceId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/uploadResourceFragment"
+        android:name="com.simats.aspirebridge.ui.resources.UploadResourceFragment"
+        android:label="Upload Resource"
+        tools:layout="@layout/fragment_upload_resource" />
+
+    <!-- Job Explorer Flow -->
+    <fragment
+        android:id="@+id/exploreJobsFragment"
+        android:name="com.simats.aspirebridge.ui.jobs.ExploreJobsFragment"
+        android:label="Explore Jobs"
+        tools:layout="@layout/fragment_explore_jobs">
+        <action
+            android:id="@+id/action_explore_jobs_to_central_government_jobs"
+            app:destination="@id/centralGovernmentJobsFragment" />
+        <action
+            android:id="@+id/action_explore_jobs_to_state_government_jobs"
+            app:destination="@id/stateGovernmentJobsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/centralGovernmentJobsFragment"
+        android:name="com.simats.aspirebridge.ui.jobs.CentralGovernmentJobsFragment"
+        android:label="Central Government Jobs"
+        tools:layout="@layout/fragment_central_government_jobs">
+        <action
+            android:id="@+id/action_central_jobs_to_job_details"
+            app:destination="@id/jobDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/stateGovernmentJobsFragment"
+        android:name="com.simats.aspirebridge.ui.jobs.StateGovernmentJobsFragment"
+        android:label="State Government Jobs"
+        tools:layout="@layout/fragment_state_government_jobs">
+        <action
+            android:id="@+id/action_state_jobs_to_job_details"
+            app:destination="@id/jobDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/jobDetailsFragment"
+        android:name="com.simats.aspirebridge.ui.jobs.JobDetailsFragment"
+        android:label="Job Details"
+        tools:layout="@layout/fragment_job_details" />
 
     <!-- Search & Discovery -->
     <fragment
@@ -350,5 +488,57 @@
         android:name="com.simats.aspirebridge.ui.home.RecentActivityFragment"
         android:label="Recent Activity"
         tools:layout="@layout/fragment_recent_activity" />
+
+    <!-- Admin Flow -->
+    <fragment
+        android:id="@+id/adminLoginFragment"
+        android:name="com.simats.aspirebridge.ui.admin.AdminLoginFragment"
+        android:label="Admin Login"
+        tools:layout="@layout/fragment_admin_login">
+        <action
+            android:id="@+id/action_admin_login_to_admin_dashboard"
+            app:destination="@id/adminDashboardFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminDashboardFragment"
+        android:name="com.simats.aspirebridge.ui.admin.AdminDashboardFragment"
+        android:label="Admin Dashboard"
+        tools:layout="@layout/fragment_admin_dashboard">
+        <action
+            android:id="@+id/action_admin_dashboard_to_login"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_admin_dashboard_to_user_management"
+            app:destination="@id/adminUserManagementFragment" />
+        <action
+            android:id="@+id/action_admin_dashboard_to_content_management_stories"
+            app:destination="@id/adminContentManagementFragment" />
+        <action
+            android:id="@+id/action_admin_dashboard_to_content_management_resources"
+            app:destination="@id/adminContentManagementFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminContentManagementFragment"
+        android:name="com.simats.aspirebridge.ui.admin.AdminContentManagementFragment"
+        android:label="Content Management"
+        tools:layout="@layout/fragment_admin_content_management">
+        <argument
+            android:name="contentType"
+            app:argType="string"
+            android:defaultValue="ALL" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/adminUserManagementFragment"
+        android:name="com.simats.aspirebridge.ui.admin.AdminUserManagementFragment"
+        android:label="User Management"
+        tools:layout="@layout/fragment_admin_user_management">
+        <argument
+            android:name="userType"
+            app:argType="string"
+            android:defaultValue="ALL" />
+    </fragment>
 
 </navigation>

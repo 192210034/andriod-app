@@ -89,6 +89,9 @@ dependencies {
     // ViewPager2
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     
+    // FlexboxLayout for tags
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
+    
     // Socket.io for real-time messaging
     implementation("io.socket:socket.io-client:2.0.1")
     

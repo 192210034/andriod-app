@@ -18,7 +18,7 @@ data class User(
     val profilePicture: String? = null,
     val bio: String = "",
     val skills: List<String> = emptyList(),
-    val userType: UserType = UserType.MENTEE,
+    val userType: UserType = UserType.ASPIRANT,
     val availability: AvailabilityStatus = AvailabilityStatus.AVAILABLE,
     val rating: Float = 0f,
     val totalSessions: Int = 0,
@@ -29,7 +29,7 @@ data class User(
  * User type enumeration
  */
 enum class UserType {
-    MENTOR, MENTEE, BOTH
+    ASPIRANT, ACHIEVER, ADMIN
 }
 
 /**
