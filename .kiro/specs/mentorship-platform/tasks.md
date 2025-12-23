@@ -28,15 +28,25 @@ Implementation of a native Android mentorship platform using Kotlin for business
     - **Property 2: Invalid Credentials Rejection**
     - **Validates: Requirements 1.3**
 
-  - [ ] 2.4 Create authentication XML layouts
-    - Design login_activity.xml with Material Design components
-    - Create register_activity.xml with form validation
-    - Implement forgot_password_dialog.xml
+  - [ ] 2.4 Create authentication XML layouts (9 screens)
+    - Design splash_fragment.xml with app branding
+    - Create onboarding_fragment.xml with ViewPager2 for 3 onboarding screens
+    - Design login_fragment.xml with Material Design components
+    - Create register_fragment.xml with form validation
+    - Implement forgot_password_fragment.xml
+    - Create reset_password_fragment.xml
+    - Design email_verification_fragment.xml
     - _Requirements: 1.1, 1.2, 1.4_
 
-  - [ ] 2.5 Implement AuthViewModel and AuthActivity in Kotlin
+  - [ ] 2.5 Implement AuthViewModel and Auth Fragments in Kotlin (9 screens)
+    - Create SplashFragment with app initialization
+    - Implement OnboardingFragment with ViewPager2
+    - Create LoginFragment with validation
+    - Implement RegisterFragment with user type selection
+    - Create ForgotPasswordFragment
+    - Implement ResetPasswordFragment
+    - Create EmailVerificationFragment
     - Create AuthViewModel with LiveData for auth states
-    - Implement login, register, and password reset functions
     - Handle authentication UI logic and navigation
     - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5_
 
@@ -55,13 +65,26 @@ Implementation of a native Android mentorship platform using Kotlin for business
     - **Property 4: Profile Display Completeness**
     - **Validates: Requirements 2.3**
 
-  - [ ] 3.4 Create profile XML layouts
+  - [ ] 3.4 Create profile XML layouts (8 screens)
     - Design profile_fragment.xml with scrollable content
-    - Create profile_edit_fragment.xml with form inputs
-    - Implement skill_chip_item.xml for skills display
+    - Create edit_profile_fragment.xml with form inputs
+    - Implement profile_setup_fragment.xml for first-time users
+    - Create skills_management_fragment.xml with chip selection
+    - Design availability_settings_fragment.xml with time slots
+    - Create profile_picture_upload_fragment.xml with camera/gallery options
+    - Implement account_settings_fragment.xml
+    - Create privacy_settings_fragment.xml
     - _Requirements: 2.3, 2.4_
 
-  - [ ] 3.5 Implement ProfileViewModel and ProfileFragment
+  - [ ] 3.5 Implement ProfileViewModel and Profile Fragments (8 screens)
+    - Create ProfileFragment with user info display
+    - Implement EditProfileFragment with validation
+    - Create ProfileSetupFragment for onboarding
+    - Implement SkillsManagementFragment with dynamic chips
+    - Create AvailabilitySettingsFragment with time picker
+    - Implement ProfilePictureUploadFragment with image handling
+    - Create AccountSettingsFragment
+    - Implement PrivacySettingsFragment
     - Create ProfileViewModel with profile management logic
     - Implement image upload and compression functionality
     - Handle profile editing and validation in Kotlin
@@ -85,15 +108,23 @@ Implementation of a native Android mentorship platform using Kotlin for business
     - **Property 7: Filter Application Correctness**
     - **Validates: Requirements 3.3**
 
-  - [ ] 5.4 Create search XML layouts
+  - [ ] 5.4 Create search XML layouts (6 screens)
     - Design search_fragment.xml with search bar and filters
     - Create mentor_card_item.xml for RecyclerView display
-    - Implement filter_dialog.xml for advanced filtering
+    - Implement search_filters_fragment.xml for advanced filtering
+    - Create mentor_detail_fragment.xml with comprehensive mentor info
+    - Design mentor_reviews_fragment.xml for ratings and reviews
+    - Implement saved_mentors_fragment.xml for bookmarked mentors
     - _Requirements: 3.2, 3.4_
 
-  - [ ] 5.5 Implement SearchViewModel and SearchFragment
-    - Create SearchViewModel with search logic and filtering
+  - [ ] 5.5 Implement SearchViewModel and Search Fragments (6 screens)
+    - Create SearchFragment with search logic and filtering
+    - Implement SearchFiltersFragment with advanced filter options
+    - Create MentorDetailFragment with detailed mentor information
+    - Implement MentorReviewsFragment with ratings display
+    - Create SavedMentorsFragment for bookmarked mentors
     - Implement MentorListAdapter for RecyclerView in Kotlin
+    - Create SearchViewModel with search logic and filtering
     - Handle search queries and filter application
     - _Requirements: 3.1, 3.2, 3.3, 3.5_
 
@@ -247,6 +278,73 @@ Implementation of a native Android mentorship platform using Kotlin for business
     - Verify component integration and data flow
     - _Requirements: All requirements_
 
+- [ ] 13. Implement additional essential screens (15+ screens)
+  - [ ] 13.1 Create home dashboard variants (4 screens)
+    - Implement WelcomeDashboardFragment for first-time users
+    - Create MentorDashboardFragment with mentor-specific features
+    - Implement MenteeDashboardFragment with mentee-specific features
+    - Create RecentActivityFragment with activity timeline
+    - _Requirements: 8.1, 8.2_
+
+  - [ ] 13.2 Create notification system (3 screens)
+    - Implement NotificationsFragment with notification list
+    - Create NotificationSettingsFragment for preferences
+    - Implement PushNotificationDetailFragment for detailed view
+    - _Requirements: 4.1, 4.2, 5.2_
+
+  - [ ] 13.3 Create advanced session features (4 screens)
+    - Implement CalendarViewFragment with monthly/weekly views
+    - Create SessionConfirmationFragment for booking confirmation
+    - Implement SessionHistoryFragment with past sessions
+    - Create RescheduleSessionFragment with date/time picker
+    - _Requirements: 5.1, 5.2, 5.3, 5.4_
+
+  - [ ] 13.4 Create settings and support screens (4 screens)
+    - Implement SettingsFragment with app preferences
+    - Create HelpSupportFragment with FAQ and contact
+    - Implement AboutFragment with app information
+    - Create ContactSupportFragment with support form
+    - _Requirements: 8.3, 8.5_
+
+- [ ] 14. Implement advanced features and polish (10+ screens)
+  - [ ] 14.1 Create advanced messaging features (3 screens)
+    - Implement FileSharingFragment for document/image sharing
+    - Create VoiceCallFragment for audio calls (if applicable)
+    - Implement ChatSettingsFragment for chat preferences
+    - _Requirements: 6.3, 6.5_
+
+  - [ ] 14.2 Create feedback and rating screens (4 screens)
+    - Implement SessionFeedbackFragment with rating system
+    - Create WriteReviewFragment for detailed reviews
+    - Implement ReviewsListFragment for viewing all reviews
+    - Create FeedbackHistoryFragment for user's feedback history
+    - _Requirements: 7.1, 7.2, 7.3_
+
+  - [ ] 14.3 Create request management screens (3 screens)
+    - Implement SendRequestFragment with custom message
+    - Create RequestDetailFragment with request information
+    - Implement RequestHistoryFragment with all past requests
+    - _Requirements: 4.1, 4.2, 4.3, 4.4_
+
+- [ ] 15. Final UI polish and optimization
+  - [ ] 15.1 Implement loading states and error screens
+    - Create loading state layouts for all screens
+    - Implement error state layouts with retry options
+    - Add empty state layouts with helpful messages
+    - _Requirements: 8.5_
+
+  - [ ] 15.2 Add animations and transitions
+    - Implement smooth fragment transitions
+    - Add loading animations and progress indicators
+    - Create success/error animations for user feedback
+    - _Requirements: 8.2_
+
+  - [ ] 15.3 Optimize for different screen sizes
+    - Create tablet-specific layouts
+    - Implement responsive design for various screen densities
+    - Add landscape orientation support
+    - _Requirements: 8.1, 8.4_
+
 - [ ] 13. Final checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
@@ -259,3 +357,62 @@ Implementation of a native Android mentorship platform using Kotlin for business
 - Unit tests validate specific examples and edge cases
 - All Kotlin code follows MVVM architecture with Repository pattern
 - All XML layouts use Material Design components and consistent styling
+
+- [ ] 16. Final checkpoint - All 40+ screens implemented
+  - Ensure all screens from Figma design are implemented
+  - Verify navigation flows work correctly between all screens
+  - Test all UI components and interactions
+  - Confirm app matches Figma design specifications
+  - All screens are responsive and follow Material Design guidelines
+
+## Screen Count Summary
+
+### ✅ **IMPLEMENTED (5 screens)**
+- Basic MainActivity with bottom navigation
+- HomeFragment (placeholder)
+- SearchFragment (placeholder) 
+- SessionsFragment (placeholder)
+- ChatListFragment (placeholder)
+- ProfileFragment (placeholder)
+
+### 🔄 **PLANNED FOR IMPLEMENTATION (40+ screens)**
+
+**Authentication Flow (9 screens):**
+- SplashFragment, OnboardingFragment, LoginFragment, RegisterFragment
+- ForgotPasswordFragment, ResetPasswordFragment, EmailVerificationFragment
+- ProfileSetupFragment, WelcomeDashboardFragment
+
+**Profile Management (8 screens):**
+- ProfileFragment, EditProfileFragment, SkillsManagementFragment
+- AvailabilitySettingsFragment, ProfilePictureUploadFragment
+- AccountSettingsFragment, PrivacySettingsFragment
+
+**Search & Discovery (6 screens):**
+- SearchFragment, SearchFiltersFragment, MentorDetailFragment
+- MentorReviewsFragment, SavedMentorsFragment, SearchResultsFragment
+
+**Sessions (8 screens):**
+- SessionsFragment, ScheduleSessionFragment, SessionDetailFragment
+- CalendarViewFragment, RescheduleSessionFragment, SessionConfirmationFragment
+- SessionFeedbackFragment, SessionHistoryFragment
+
+**Messaging (6 screens):**
+- ChatListFragment, ChatFragment, FileSharingFragment
+- VoiceCallFragment, ChatSettingsFragment, GroupChatFragment
+
+**Requests & Matching (5 screens):**
+- SendRequestFragment, RequestDetailFragment, RequestsFragment
+- RequestHistoryFragment, MatchSuccessFragment
+
+**Feedback & Ratings (4 screens):**
+- SessionFeedbackFragment, WriteReviewFragment, ReviewsListFragment
+- FeedbackHistoryFragment
+
+**Settings & Support (5 screens):**
+- SettingsFragment, HelpSupportFragment, AboutFragment
+- ContactSupportFragment, FAQFragment
+
+**Notifications (3 screens):**
+- NotificationsFragment, NotificationSettingsFragment, PushNotificationDetailFragment
+
+**TOTAL PLANNED: 45+ screens matching comprehensive Figma design**

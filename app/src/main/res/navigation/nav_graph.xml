@@ -3,36 +3,352 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/nav_home">
+    app:startDestination="@id/splashFragment">
 
+    <!-- Authentication Flow -->
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.simats.aspirebridge.ui.auth.SplashFragment"
+        android:label="Splash"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splash_to_onboarding"
+            app:destination="@id/onboardingFragment" />
+        <action
+            android:id="@+id/action_splash_to_main"
+            app:destination="@id/nav_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.simats.aspirebridge.ui.auth.OnboardingFragment"
+        android:label="Onboarding"
+        tools:layout="@layout/fragment_onboarding">
+        <action
+            android:id="@+id/action_onboarding_to_login"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.simats.aspirebridge.ui.auth.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_login_to_forgot_password"
+            app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_login_to_main"
+            app:destination="@id/nav_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.simats.aspirebridge.ui.auth.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_register_to_profile_setup"
+            app:destination="@id/profileSetupFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.simats.aspirebridge.ui.auth.ForgotPasswordFragment"
+        android:label="Forgot Password"
+        tools:layout="@layout/fragment_forgot_password" />
+
+    <fragment
+        android:id="@+id/profileSetupFragment"
+        android:name="com.simats.aspirebridge.ui.profile.ProfileSetupFragment"
+        android:label="Profile Setup"
+        tools:layout="@layout/fragment_profile_setup">
+        <action
+            android:id="@+id/action_profile_setup_to_main"
+            app:destination="@id/nav_home" />
+    </fragment>
+
+    <!-- Main Navigation -->
     <fragment
         android:id="@+id/nav_home"
         android:name="com.simats.aspirebridge.ui.home.HomeFragment"
         android:label="@string/nav_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_notifications"
+            app:destination="@id/notificationsFragment" />
+        <action
+            android:id="@+id/action_home_to_recent_activity"
+            app:destination="@id/recentActivityFragment" />
+    </fragment>
 
+    <!-- Search & Discovery -->
     <fragment
         android:id="@+id/nav_search"
         android:name="com.simats.aspirebridge.ui.search.SearchFragment"
         android:label="@string/nav_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_search_to_mentor_detail"
+            app:destination="@id/mentorDetailFragment" />
+        <action
+            android:id="@+id/action_search_to_filters"
+            app:destination="@id/searchFiltersFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/mentorDetailFragment"
+        android:name="com.simats.aspirebridge.ui.mentor.MentorDetailFragment"
+        android:label="Mentor Details"
+        tools:layout="@layout/fragment_mentor_detail">
+        <argument
+            android:name="mentorId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_mentor_detail_to_send_request"
+            app:destination="@id/sendRequestFragment" />
+        <action
+            android:id="@+id/action_mentor_detail_to_reviews"
+            app:destination="@id/mentorReviewsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFiltersFragment"
+        android:name="com.simats.aspirebridge.ui.search.SearchFiltersFragment"
+        android:label="Search Filters"
+        tools:layout="@layout/fragment_search_filters" />
+
+    <fragment
+        android:id="@+id/mentorReviewsFragment"
+        android:name="com.simats.aspirebridge.ui.mentor.MentorReviewsFragment"
+        android:label="Reviews"
+        tools:layout="@layout/fragment_mentor_reviews">
+        <argument
+            android:name="mentorId"
+            app:argType="string" />
+    </fragment>
+
+    <!-- Requests & Matching -->
+    <fragment
+        android:id="@+id/sendRequestFragment"
+        android:name="com.simats.aspirebridge.ui.request.SendRequestFragment"
+        android:label="Send Request"
+        tools:layout="@layout/fragment_send_request">
+        <argument
+            android:name="mentorId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/requestsFragment"
+        android:name="com.simats.aspirebridge.ui.request.RequestsFragment"
+        android:label="Requests"
+        tools:layout="@layout/fragment_requests" />
+
+    <fragment
+        android:id="@+id/requestDetailFragment"
+        android:name="com.simats.aspirebridge.ui.request.RequestDetailFragment"
+        android:label="Request Details"
+        tools:layout="@layout/fragment_request_detail">
+        <argument
+            android:name="requestId"
+            app:argType="string" />
+    </fragment>
+
+    <!-- Sessions -->
     <fragment
         android:id="@+id/nav_sessions"
         android:name="com.simats.aspirebridge.ui.sessions.SessionsFragment"
         android:label="@string/nav_sessions"
-        tools:layout="@layout/fragment_sessions" />
+        tools:layout="@layout/fragment_sessions">
+        <action
+            android:id="@+id/action_sessions_to_schedule"
+            app:destination="@id/scheduleSessionFragment" />
+        <action
+            android:id="@+id/action_sessions_to_detail"
+            app:destination="@id/sessionDetailFragment" />
+        <action
+            android:id="@+id/action_sessions_to_calendar"
+            app:destination="@id/calendarViewFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/scheduleSessionFragment"
+        android:name="com.simats.aspirebridge.ui.sessions.ScheduleSessionFragment"
+        android:label="Schedule Session"
+        tools:layout="@layout/fragment_schedule_session">
+        <argument
+            android:name="mentorId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/sessionDetailFragment"
+        android:name="com.simats.aspirebridge.ui.sessions.SessionDetailFragment"
+        android:label="Session Details"
+        tools:layout="@layout/fragment_session_detail">
+        <argument
+            android:name="sessionId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_session_detail_to_reschedule"
+            app:destination="@id/rescheduleSessionFragment" />
+        <action
+            android:id="@+id/action_session_detail_to_feedback"
+            app:destination="@id/sessionFeedbackFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/calendarViewFragment"
+        android:name="com.simats.aspirebridge.ui.sessions.CalendarViewFragment"
+        android:label="Calendar"
+        tools:layout="@layout/fragment_calendar_view" />
+
+    <fragment
+        android:id="@+id/rescheduleSessionFragment"
+        android:name="com.simats.aspirebridge.ui.sessions.RescheduleSessionFragment"
+        android:label="Reschedule Session"
+        tools:layout="@layout/fragment_reschedule_session">
+        <argument
+            android:name="sessionId"
+            app:argType="string" />
+    </fragment>
+
+    <!-- Chat & Messaging -->
     <fragment
         android:id="@+id/nav_chat"
         android:name="com.simats.aspirebridge.ui.chat.ChatListFragment"
         android:label="@string/nav_chat"
-        tools:layout="@layout/fragment_chat_list" />
+        tools:layout="@layout/fragment_chat_list">
+        <action
+            android:id="@+id/action_chat_list_to_chat"
+            app:destination="@id/chatFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.simats.aspirebridge.ui.chat.ChatFragment"
+        android:label="Chat"
+        tools:layout="@layout/fragment_chat">
+        <argument
+            android:name="chatId"
+            app:argType="string" />
+        <argument
+            android:name="recipientName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_chat_to_file_sharing"
+            app:destination="@id/fileSharingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fileSharingFragment"
+        android:name="com.simats.aspirebridge.ui.chat.FileSharingFragment"
+        android:label="Share File"
+        tools:layout="@layout/fragment_file_sharing" />
+
+    <!-- Profile -->
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.simats.aspirebridge.ui.profile.ProfileFragment"
         android:label="@string/nav_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profile_to_edit"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_profile_to_settings"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_profile_to_skills"
+            app:destination="@id/skillsManagementFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.simats.aspirebridge.ui.profile.EditProfileFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_edit_profile" />
+
+    <fragment
+        android:id="@+id/skillsManagementFragment"
+        android:name="com.simats.aspirebridge.ui.profile.SkillsManagementFragment"
+        android:label="Manage Skills"
+        tools:layout="@layout/fragment_skills_management" />
+
+    <fragment
+        android:id="@+id/availabilitySettingsFragment"
+        android:name="com.simats.aspirebridge.ui.profile.AvailabilitySettingsFragment"
+        android:label="Availability Settings"
+        tools:layout="@layout/fragment_availability_settings" />
+
+    <!-- Feedback & Ratings -->
+    <fragment
+        android:id="@+id/sessionFeedbackFragment"
+        android:name="com.simats.aspirebridge.ui.feedback.SessionFeedbackFragment"
+        android:label="Session Feedback"
+        tools:layout="@layout/fragment_session_feedback">
+        <argument
+            android:name="sessionId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/writeReviewFragment"
+        android:name="com.simats.aspirebridge.ui.feedback.WriteReviewFragment"
+        android:label="Write Review"
+        tools:layout="@layout/fragment_write_review">
+        <argument
+            android:name="mentorId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/reviewsListFragment"
+        android:name="com.simats.aspirebridge.ui.feedback.ReviewsListFragment"
+        android:label="Reviews"
+        tools:layout="@layout/fragment_reviews_list" />
+
+    <!-- Settings & Support -->
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.simats.aspirebridge.ui.settings.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settings_to_help"
+            app:destination="@id/helpSupportFragment" />
+        <action
+            android:id="@+id/action_settings_to_about"
+            app:destination="@id/aboutFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/helpSupportFragment"
+        android:name="com.simats.aspirebridge.ui.settings.HelpSupportFragment"
+        android:label="Help & Support"
+        tools:layout="@layout/fragment_help_support" />
+
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.simats.aspirebridge.ui.settings.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" />
+
+    <!-- Notifications -->
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.simats.aspirebridge.ui.notifications.NotificationsFragment"
+        android:label="Notifications"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/recentActivityFragment"
+        android:name="com.simats.aspirebridge.ui.home.RecentActivityFragment"
+        android:label="Recent Activity"
+        tools:layout="@layout/fragment_recent_activity" />
 
 </navigation>
