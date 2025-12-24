@@ -467,7 +467,7 @@
     <fragment
         android:id="@+id/helpSupportFragment"
         android:name="com.simats.aspirebridge.ui.settings.HelpSupportFragment"
-        android:label="Help & Support"
+        android:label="Help &amp; Support"
         tools:layout="@layout/fragment_help_support" />
 
     <fragment

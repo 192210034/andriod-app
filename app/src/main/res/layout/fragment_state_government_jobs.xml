@@ -206,7 +206,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Health & Medical Services"
+                                android:text="Health &amp; Medical Services"
                                 android:textColor="@color/text_primary"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
@@ -335,7 +335,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Courts & Judiciary -->
+            <!-- Courts &amp; Judiciary -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_courts_jobs"
                 android:layout_width="match_parent"
@@ -386,7 +386,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Courts & Judiciary"
+                                android:text="Courts &amp; Judiciary"
                                 android:textColor="@color/text_primary"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
