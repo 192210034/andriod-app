@@ -85,23 +85,8 @@ enum class RequestStatus {
     PENDING, ACCEPTED, DECLINED
 }
 
-// Session models
-@Parcelize
-data class Session(
-    val id: String? = null,
-    val mentorId: String,
-    val menteeId: String,
-    val scheduledTime: Long,
-    val duration: Int, // in minutes
-    val status: SessionStatus = SessionStatus.SCHEDULED,
-    val meetingLink: String? = null,
-    val notes: String? = null,
-    val createdAt: Long = System.currentTimeMillis()
-) : Parcelable
-
-enum class SessionStatus {
-    SCHEDULED, COMPLETED, CANCELLED
-}
+// Session models - Using SessionModels.kt for comprehensive session management
+// Session and SessionStatus are defined in SessionModels.kt
 
 // Message models
 @Parcelize

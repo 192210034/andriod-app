@@ -15,18 +15,14 @@ import com.simats.aspirebridge.data.model.UserType
 import com.simats.aspirebridge.data.manager.UserSessionManager
 import com.simats.aspirebridge.databinding.FragmentAspirantDashboardBinding
 import com.simats.aspirebridge.databinding.FragmentAchieverDashboardBinding
-import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * Home fragment showing role-based dashboard for Aspirants and Achievers
  */
-@AndroidEntryPoint
 class HomeFragment : Fragment() {
     
-    @Inject
-    lateinit var userSessionManager: UserSessionManager
+    private lateinit var userSessionManager: UserSessionManager
     
     private var _aspirantBinding: FragmentAspirantDashboardBinding? = null
     private var _achieverBinding: FragmentAchieverDashboardBinding? = null
@@ -42,6 +38,9 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // Initialize UserSessionManager
+        userSessionManager = UserSessionManager(requireContext())
+        
         // Set mock user for testing - In real app, this would be set during login
         // Change between UserType.ASPIRANT and UserType.ACHIEVER to test different dashboards
         userSessionManager.setMockUser(UserType.ASPIRANT)
@@ -248,6 +247,9 @@ class HomeFragment : Fragment() {
             }
             UserType.ACHIEVER -> {
                 viewModel.loadAchieverDashboardData(currentUserId)
+            }
+            UserType.ADMIN -> {
+                // Admin users don't need dashboard data
             }
         }
         

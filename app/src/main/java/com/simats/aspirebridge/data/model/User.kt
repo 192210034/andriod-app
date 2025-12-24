@@ -1,7 +1,5 @@
 package com.simats.aspirebridge.data.model
 
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
@@ -9,9 +7,7 @@ import kotlinx.parcelize.Parcelize
  * User data model for the mentorship platform
  */
 @Parcelize
-@Entity(tableName = "users")
 data class User(
-    @PrimaryKey
     val id: String,
     val name: String,
     val email: String,

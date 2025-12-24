@@ -81,12 +81,7 @@ data class AchieverProfile(
     val availability: AvailabilityStatus = AvailabilityStatus.AVAILABLE
 ) : Parcelable
 
-enum class AvailabilityStatus {
-    AVAILABLE,
-    BUSY,
-    OFFLINE,
-    AWAY
-}
+// AvailabilityStatus is defined in User.kt
 
 @Parcelize
 data class MentorProfile(

@@ -4,20 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.simats.aspirebridge.data.model.User
 import com.simats.aspirebridge.data.model.UserType
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Manages user session and authentication state
  */
-@Singleton
-class UserSessionManager @Inject constructor(
-    @ApplicationContext private val context: Context
-) {
+class UserSessionManager(private val context: Context) {
     private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     
     private val _currentUser = MutableStateFlow<User?>(null)
