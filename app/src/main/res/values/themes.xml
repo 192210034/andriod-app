@@ -72,9 +72,10 @@
         <item name="boxStrokeColor">@color/primary</item>
         <item name="hintTextColor">@color/text_hint</item>
     </style>
-</resources>
+    
     <!-- Image Styles -->
     <style name="CircleImageView">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+</resources>
