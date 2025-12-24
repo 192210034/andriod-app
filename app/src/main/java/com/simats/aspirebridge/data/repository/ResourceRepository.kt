@@ -1,15 +1,31 @@
 package com.simats.aspirebridge.data.repository
 
+import com.simats.aspirebridge.R
+import com.simats.aspirebridge.data.api.ApiService
 import com.simats.aspirebridge.data.model.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class ResourceRepository @Inject constructor(
-    private val examRepository: ExamRepository
+class ResourceRepository(
+    private val apiService: ApiService
 ) {
+
+    // New method to get all resources (was missing)
+    suspend fun getAllResources(): List<Resource> {
+        // TODO: Replace with actual API call when backend is ready
+        return getSampleResources()
+    }
+
+    // New method to delete resource (was missing)
+    suspend fun deleteResource(resourceId: String): Boolean {
+        // TODO: Implement actual API call when backend is ready
+        return try {
+            // apiService.deleteResource(resourceId)
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
 
     fun getResources(filter: ResourceFilter? = null): Flow<List<Resource>> = flow {
         val resources = getSampleResources()
@@ -164,9 +180,75 @@ class ResourceRepository @Inject constructor(
     }
 
     private fun getSampleResources(): List<Resource> {
-        val upscCategory = examRepository.getExamCategoryById("upsc")!!
-        val sscCategory = examRepository.getExamCategoryById("ssc")!!
-        val railwaysCategory = examRepository.getExamCategoryById("railways")!!
+        // Create sample exam categories for testing
+        val upscCategory = ExamCategory(
+            id = "upsc",
+            name = "UPSC",
+            fullName = "Union Public Service Commission",
+            description = "Union Public Service Commission",
+            iconRes = R.drawable.ic_upsc,
+            colorRes = R.color.warning,
+            subcategories = listOf(
+                ExamSubcategory(
+                    id = "upsc_civil_services", 
+                    name = "Civil Services", 
+                    fullName = "Civil Services Examination",
+                    parentCategoryId = "upsc",
+                    description = "Civil Services Examination",
+                    eligibility = "Graduate",
+                    examPattern = "Prelims + Mains + Interview"
+                )
+            )
+        )
+        
+        val sscCategory = ExamCategory(
+            id = "ssc",
+            name = "SSC",
+            fullName = "Staff Selection Commission",
+            description = "Staff Selection Commission",
+            iconRes = R.drawable.ic_ssc,
+            colorRes = R.color.success,
+            subcategories = listOf(
+                ExamSubcategory(
+                    id = "ssc_cgl", 
+                    name = "CGL", 
+                    fullName = "Combined Graduate Level",
+                    parentCategoryId = "ssc",
+                    description = "Combined Graduate Level",
+                    eligibility = "Graduate",
+                    examPattern = "Tier I + Tier II"
+                ),
+                ExamSubcategory(
+                    id = "ssc_chsl", 
+                    name = "CHSL", 
+                    fullName = "Combined Higher Secondary Level",
+                    parentCategoryId = "ssc",
+                    description = "Combined Higher Secondary Level",
+                    eligibility = "12th Pass",
+                    examPattern = "Tier I + Tier II"
+                )
+            )
+        )
+        
+        val railwaysCategory = ExamCategory(
+            id = "railways",
+            name = "Railways",
+            fullName = "Indian Railways",
+            description = "Railway Recruitment Board",
+            iconRes = R.drawable.ic_train,
+            colorRes = R.color.info,
+            subcategories = listOf(
+                ExamSubcategory(
+                    id = "rrb_ntpc", 
+                    name = "NTPC", 
+                    fullName = "Non-Technical Popular Categories",
+                    parentCategoryId = "railways",
+                    description = "Non-Technical Popular Categories",
+                    eligibility = "Graduate/12th",
+                    examPattern = "CBT 1 + CBT 2"
+                )
+            )
+        )
 
         return listOf(
             Resource(

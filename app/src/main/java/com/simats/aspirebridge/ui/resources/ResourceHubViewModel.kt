@@ -7,16 +7,13 @@ import com.simats.aspirebridge.data.model.Resource
 import com.simats.aspirebridge.data.model.ResourceFilter
 import com.simats.aspirebridge.data.repository.ExamRepository
 import com.simats.aspirebridge.data.repository.ResourceRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ViewModel for Resource Hub screen
  */
-@HiltViewModel
-class ResourceHubViewModel @Inject constructor(
+class ResourceHubViewModel(
     private val resourceRepository: ResourceRepository,
     private val examRepository: ExamRepository
 ) : ViewModel() {

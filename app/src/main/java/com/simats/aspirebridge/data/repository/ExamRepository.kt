@@ -1,12 +1,12 @@
 package com.simats.aspirebridge.data.repository
 
 import com.simats.aspirebridge.R
+import com.simats.aspirebridge.data.api.ApiService
 import com.simats.aspirebridge.data.model.*
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class ExamRepository @Inject constructor() {
+class ExamRepository(
+    private val apiService: ApiService
+) {
 
     fun getAllExamCategories(): List<ExamCategory> {
         return listOf(

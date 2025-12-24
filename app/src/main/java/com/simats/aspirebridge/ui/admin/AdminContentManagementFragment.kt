@@ -5,26 +5,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.simats.aspirebridge.MentorshipApplication
 import com.simats.aspirebridge.databinding.FragmentAdminContentManagementBinding
-import dagger.hilt.android.AndroidEntryPoint
+import com.simats.aspirebridge.ui.ViewModelFactory
 import kotlinx.coroutines.launch
 
 /**
  * Admin content management fragment for managing success stories and resources
  */
-@AndroidEntryPoint
 class AdminContentManagementFragment : Fragment() {
     
     private var _binding: FragmentAdminContentManagementBinding? = null
     private val binding get() = _binding!!
     
-    private val args: AdminContentManagementFragmentArgs by navArgs()
-    private val viewModel: AdminContentManagementViewModel by viewModels()
+    private lateinit var viewModel: AdminContentManagementViewModel
     private lateinit var contentAdapter: AdminContentAdapter
     
     override fun onCreateView(
@@ -38,6 +36,12 @@ class AdminContentManagementFragment : Fragment() {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        // Initialize ViewModel with factory
+        val dependencyContainer = (requireActivity().application as MentorshipApplication).container
+        val factory = ViewModelFactory(dependencyContainer)
+        viewModel = ViewModelProvider(this, factory)[AdminContentManagementViewModel::class.java]
+        
         setupUI()
         setupRecyclerView()
         setupClickListeners()
@@ -46,7 +50,7 @@ class AdminContentManagementFragment : Fragment() {
     }
     
     private fun setupUI() {
-        val contentType = args.contentType
+        val contentType = arguments?.getString("contentType") ?: "STORIES"
         binding.textTitle.text = when (contentType) {
             "STORIES" -> "Manage Success Stories"
             "RESOURCES" -> "Manage Resources"
@@ -63,7 +67,8 @@ class AdminContentManagementFragment : Fragment() {
                 // TODO: Navigate to content edit screen
             },
             onDeleteClick = { content ->
-                viewModel.deleteContent(content.id, args.contentType)
+                val contentType = arguments?.getString("contentType") ?: "STORIES"
+                viewModel.deleteContent(content.id, contentType)
             }
         )
         
@@ -146,7 +151,8 @@ class AdminContentManagementFragment : Fragment() {
     }
     
     private fun loadData() {
-        viewModel.loadContent(args.contentType)
+        val contentType = arguments?.getString("contentType") ?: "STORIES"
+        viewModel.loadContent(contentType)
     }
     
     override fun onDestroyView() {

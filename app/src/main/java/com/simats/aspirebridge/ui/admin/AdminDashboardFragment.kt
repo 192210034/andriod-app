@@ -5,29 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.simats.aspirebridge.MentorshipApplication
 import com.simats.aspirebridge.R
 import com.simats.aspirebridge.data.manager.UserSessionManager
 import com.simats.aspirebridge.databinding.FragmentAdminDashboardBinding
-import dagger.hilt.android.AndroidEntryPoint
+import com.simats.aspirebridge.ui.ViewModelFactory
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * Admin dashboard fragment for platform management
  */
-@AndroidEntryPoint
 class AdminDashboardFragment : Fragment() {
     
-    @Inject
-    lateinit var userSessionManager: UserSessionManager
+    private lateinit var userSessionManager: UserSessionManager
     
     private var _binding: FragmentAdminDashboardBinding? = null
     private val binding get() = _binding!!
     
-    private val viewModel: AdminDashboardViewModel by viewModels()
+    private lateinit var viewModel: AdminDashboardViewModel
     
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +38,13 @@ class AdminDashboardFragment : Fragment() {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        // Initialize dependencies
+        val dependencyContainer = (requireActivity().application as MentorshipApplication).container
+        userSessionManager = dependencyContainer.userSessionManager
+        val factory = ViewModelFactory(dependencyContainer)
+        viewModel = ViewModelProvider(this, factory)[AdminDashboardViewModel::class.java]
+        
         setupUI()
         setupClickListeners()
         observeViewModel()

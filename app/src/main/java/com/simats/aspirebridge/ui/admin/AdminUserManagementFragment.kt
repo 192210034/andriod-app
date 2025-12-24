@@ -8,29 +8,26 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.simats.aspirebridge.MentorshipApplication
 import com.simats.aspirebridge.R
 import com.simats.aspirebridge.data.model.User
 import com.simats.aspirebridge.databinding.FragmentAdminUserManagementBinding
-import dagger.hilt.android.AndroidEntryPoint
+import com.simats.aspirebridge.ui.ViewModelFactory
 import kotlinx.coroutines.launch
 
 /**
  * Fragment for admin user management
  */
-@AndroidEntryPoint
 class AdminUserManagementFragment : Fragment() {
 
     private var _binding: FragmentAdminUserManagementBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: AdminUserManagementViewModel by viewModels()
-    private val args: AdminUserManagementFragmentArgs by navArgs()
-
+    private lateinit var viewModel: AdminUserManagementViewModel
     private lateinit var userAdapter: AdminUserAdapter
 
     override fun onCreateView(
@@ -44,6 +41,12 @@ class AdminUserManagementFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        // Initialize ViewModel with factory
+        val dependencyContainer = (requireActivity().application as MentorshipApplication).container
+        val factory = ViewModelFactory(dependencyContainer)
+        viewModel = ViewModelProvider(this, factory)[AdminUserManagementViewModel::class.java]
+        
         setupUI()
         setupRecyclerView()
         setupClickListeners()
@@ -142,7 +145,8 @@ class AdminUserManagementFragment : Fragment() {
 
     private fun handleArguments() {
         // Handle user type filter from navigation arguments
-        when (args.userType) {
+        val userType = arguments?.getString("userType")
+        when (userType) {
             "ASPIRANT" -> {
                 viewModel.setFilter(UserFilter.ASPIRANTS)
                 binding.textTitle.text = "Aspirant Management"

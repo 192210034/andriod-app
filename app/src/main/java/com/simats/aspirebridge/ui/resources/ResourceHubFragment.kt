@@ -5,30 +5,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
+import com.simats.aspirebridge.MentorshipApplication
 import com.simats.aspirebridge.R
 import com.simats.aspirebridge.data.model.ExamCategory
 import com.simats.aspirebridge.data.model.Resource
 import com.simats.aspirebridge.data.model.ResourceFilter
 import com.simats.aspirebridge.data.model.ResourceType
 import com.simats.aspirebridge.databinding.FragmentResourceHubBinding
-import dagger.hilt.android.AndroidEntryPoint
+import com.simats.aspirebridge.ui.ViewModelFactory
 import kotlinx.coroutines.launch
 
 /**
  * Fragment displaying resource hub with category and type filtering
  */
-@AndroidEntryPoint
 class ResourceHubFragment : Fragment() {
     
     private var _binding: FragmentResourceHubBinding? = null
     private val binding get() = _binding!!
     
-    private val viewModel: ResourceHubViewModel by viewModels()
+    private lateinit var viewModel: ResourceHubViewModel
     private lateinit var resourcesAdapter: ResourcesAdapter
     
     private var examCategories: List<ExamCategory> = emptyList()
@@ -45,6 +45,12 @@ class ResourceHubFragment : Fragment() {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        // Initialize ViewModel with factory
+        val dependencyContainer = (requireActivity().application as MentorshipApplication).container
+        val factory = ViewModelFactory(dependencyContainer)
+        viewModel = ViewModelProvider(this, factory)[ResourceHubViewModel::class.java]
+        
         setupUI()
         setupClickListeners()
         observeViewModel()
@@ -56,9 +62,10 @@ class ResourceHubFragment : Fragment() {
         resourcesAdapter = ResourcesAdapter(
             onResourceClick = { resource ->
                 // Navigate to resource detail
-                val action = ResourceHubFragmentDirections
-                    .actionResourceHubToResourceDetail(resource.id)
-                findNavController().navigate(action)
+                val bundle = Bundle().apply {
+                    putString("resourceId", resource.id)
+                }
+                findNavController().navigate(R.id.action_resource_hub_to_resource_detail, bundle)
             },
             onDownloadClick = { resource ->
                 viewModel.downloadResource(resource.id)

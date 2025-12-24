@@ -4,16 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.simats.aspirebridge.data.repository.ResourceRepository
 import com.simats.aspirebridge.data.repository.SuccessStoryRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ViewModel for Admin Dashboard
  */
-@HiltViewModel
-class AdminDashboardViewModel @Inject constructor(
+class AdminDashboardViewModel(
     private val successStoryRepository: SuccessStoryRepository,
     private val resourceRepository: ResourceRepository
     // TODO: Add UserRepository, SessionRepository when implemented
@@ -61,20 +58,18 @@ class AdminDashboardViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 // Load success stories count
-                successStoryRepository.getAllSuccessStories().collect { stories ->
-                    val currentStats = _contentStats.value
-                    _contentStats.value = currentStats.copy(
-                        successStoriesCount = stories.size
-                    )
-                }
+                val stories = successStoryRepository.getAllSuccessStories()
+                val currentStats = _contentStats.value
+                _contentStats.value = currentStats.copy(
+                    successStoriesCount = stories.size
+                )
                 
-                // Load resources count
-                resourceRepository.getResources().collect { resources ->
-                    val currentStats = _contentStats.value
-                    _contentStats.value = currentStats.copy(
-                        resourcesCount = resources.size
-                    )
-                }
+                // Load resources count  
+                val resources = resourceRepository.getAllResources()
+                val currentStatsUpdated = _contentStats.value
+                _contentStats.value = currentStatsUpdated.copy(
+                    resourcesCount = resources.size
+                )
                 
             } catch (e: Exception) {
                 _error.value = "Failed to load content statistics: ${e.message}"

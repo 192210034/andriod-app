@@ -5,29 +5,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
+import com.simats.aspirebridge.MentorshipApplication
 import com.simats.aspirebridge.R
 import com.simats.aspirebridge.data.model.ExamCategory
 import com.simats.aspirebridge.data.model.SuccessStory
 import com.simats.aspirebridge.data.model.SuccessStoryFilter
 import com.simats.aspirebridge.databinding.FragmentSuccessStoriesBinding
-import dagger.hilt.android.AndroidEntryPoint
+import com.simats.aspirebridge.ui.ViewModelFactory
 import kotlinx.coroutines.launch
 
 /**
  * Fragment displaying success stories with category filtering
  */
-@AndroidEntryPoint
 class SuccessStoriesFragment : Fragment() {
     
     private var _binding: FragmentSuccessStoriesBinding? = null
     private val binding get() = _binding!!
     
-    private val viewModel: SuccessStoriesViewModel by viewModels()
+    private lateinit var viewModel: SuccessStoriesViewModel
     private lateinit var storiesAdapter: SuccessStoriesAdapter
     
     private var examCategories: List<ExamCategory> = emptyList()
@@ -44,6 +44,12 @@ class SuccessStoriesFragment : Fragment() {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        // Initialize ViewModel with factory
+        val dependencyContainer = (requireActivity().application as MentorshipApplication).container
+        val factory = ViewModelFactory(dependencyContainer)
+        viewModel = ViewModelProvider(this, factory)[SuccessStoriesViewModel::class.java]
+        
         setupUI()
         setupClickListeners()
         observeViewModel()
@@ -55,17 +61,19 @@ class SuccessStoriesFragment : Fragment() {
         storiesAdapter = SuccessStoriesAdapter(
             onStoryClick = { story ->
                 // Navigate to story detail
-                val action = SuccessStoriesFragmentDirections
-                    .actionSuccessStoriesToStoryDetail(story.id)
-                findNavController().navigate(action)
+                val bundle = Bundle().apply {
+                    putString("storyId", story.id)
+                }
+                findNavController().navigate(R.id.action_success_stories_to_story_detail, bundle)
             },
             onLikeClick = { story ->
                 viewModel.likeStory(story.id)
             },
             onCommentClick = { story ->
-                val action = SuccessStoriesFragmentDirections
-                    .actionSuccessStoriesToStoryDetail(story.id)
-                findNavController().navigate(action)
+                val bundle = Bundle().apply {
+                    putString("storyId", story.id)
+                }
+                findNavController().navigate(R.id.action_success_stories_to_story_detail, bundle)
             },
             onShareClick = { story ->
                 viewModel.shareStory(story.id)

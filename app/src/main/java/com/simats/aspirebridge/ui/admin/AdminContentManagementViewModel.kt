@@ -4,16 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.simats.aspirebridge.data.repository.ResourceRepository
 import com.simats.aspirebridge.data.repository.SuccessStoryRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ViewModel for Admin Content Management
  */
-@HiltViewModel
-class AdminContentManagementViewModel @Inject constructor(
+class AdminContentManagementViewModel(
     private val successStoryRepository: SuccessStoryRepository,
     private val resourceRepository: ResourceRepository
 ) : ViewModel() {
@@ -50,27 +47,26 @@ class AdminContentManagementViewModel @Inject constructor(
     }
 
     private suspend fun loadSuccessStories() {
-        successStoryRepository.getAllSuccessStories().collect { stories ->
-            val contentItems = stories.map { story ->
-                AdminContentItem(
-                    id = story.id,
-                    title = story.title,
-                    authorName = "Author Name", // TODO: Get from user repository
-                    type = "STORY",
-                    status = "Active",
-                    createdAt = story.createdAt,
-                    likesCount = story.likes,
-                    isReported = false // TODO: Implement reporting system
-                )
-            }
-            _allContent.value = contentItems
-            applyCurrentFilter()
+        val stories = successStoryRepository.getAllSuccessStories()
+        val contentItems = stories.map { story ->
+            AdminContentItem(
+                id = story.id,
+                title = story.title,
+                authorName = "Author Name", // TODO: Get from user repository
+                type = "STORY",
+                status = "Active",
+                createdAt = story.createdAt,
+                likesCount = story.likes,
+                isReported = false // TODO: Implement reporting system
+            )
         }
+        _allContent.value = contentItems
+        applyCurrentFilter()
     }
 
     private suspend fun loadResources() {
-        resourceRepository.getResources().collect { resources ->
-            val contentItems = resources.map { resource ->
+        val resources = resourceRepository.getAllResources()
+        val contentItems = resources.map { resource ->
                 AdminContentItem(
                     id = resource.id,
                     title = resource.title,
@@ -84,47 +80,41 @@ class AdminContentManagementViewModel @Inject constructor(
             }
             _allContent.value = contentItems
             applyCurrentFilter()
-        }
     }
 
     private suspend fun loadAllContent() {
         // Load both stories and resources
-        val stories = mutableListOf<AdminContentItem>()
-        val resources = mutableListOf<AdminContentItem>()
+        val allItems = mutableListOf<AdminContentItem>()
         
-        successStoryRepository.getAllSuccessStories().collect { storyList ->
-            stories.clear()
-            stories.addAll(storyList.map { story ->
-                AdminContentItem(
-                    id = story.id,
-                    title = story.title,
-                    authorName = "Author Name",
-                    type = "STORY",
-                    status = "Active",
-                    createdAt = story.createdAt,
-                    likesCount = story.likes,
-                    isReported = false
-                )
-            })
-        }
+        val stories = successStoryRepository.getAllSuccessStories()
+        allItems.addAll(stories.map { story ->
+            AdminContentItem(
+                id = story.id,
+                title = story.title,
+                authorName = "Author Name",
+                type = "STORY",
+                status = "Active",
+                createdAt = story.createdAt,
+                likesCount = story.likes,
+                isReported = false
+            )
+        })
         
-        resourceRepository.getResources().collect { resourceList ->
-            resources.clear()
-            resources.addAll(resourceList.map { resource ->
-                AdminContentItem(
-                    id = resource.id,
-                    title = resource.title,
-                    authorName = "Author Name",
-                    type = "RESOURCE",
-                    status = "Active",
-                    createdAt = resource.createdAt,
-                    likesCount = resource.downloads,
-                    isReported = false
-                )
-            })
-        }
+        val resources = resourceRepository.getAllResources()
+        allItems.addAll(resources.map { resource ->
+            AdminContentItem(
+                id = resource.id,
+                title = resource.title,
+                authorName = "Author Name",
+                type = "RESOURCE",
+                status = "Active",
+                createdAt = resource.createdAt,
+                likesCount = resource.downloads,
+                isReported = false
+            )
+        })
         
-        _allContent.value = (stories + resources).sortedByDescending { it.createdAt }
+        _allContent.value = allItems.sortedByDescending { it.createdAt }
         applyCurrentFilter()
     }
 

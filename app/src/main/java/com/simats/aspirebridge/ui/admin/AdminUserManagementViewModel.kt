@@ -4,16 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.simats.aspirebridge.data.model.User
 import com.simats.aspirebridge.data.model.UserType
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ViewModel for Admin User Management
  */
-@HiltViewModel
-class AdminUserManagementViewModel @Inject constructor(
+class AdminUserManagementViewModel(
     // TODO: Add UserRepository when implemented
 ) : ViewModel() {
 

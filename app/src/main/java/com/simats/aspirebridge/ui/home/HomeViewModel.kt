@@ -9,16 +9,13 @@ import com.simats.aspirebridge.data.model.BookingRequest
 import com.simats.aspirebridge.data.model.Wallet
 import com.simats.aspirebridge.data.repository.ResourceRepository
 import com.simats.aspirebridge.data.repository.SuccessStoryRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ViewModel for Home screen with role-based dashboard support
  */
-@HiltViewModel
-class HomeViewModel @Inject constructor(
+class HomeViewModel(
     private val successStoryRepository: SuccessStoryRepository,
     private val resourceRepository: ResourceRepository
     // TODO: Add SessionRepository, WalletRepository, BookingRepository when implemented

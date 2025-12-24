@@ -7,12 +7,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.simats.aspirebridge.R
 import com.simats.aspirebridge.databinding.ActivityMainBinding
-import dagger.hilt.android.AndroidEntryPoint
 
 /**
  * Main activity that hosts the navigation fragments
  */
-@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     
     private lateinit var binding: ActivityMainBinding

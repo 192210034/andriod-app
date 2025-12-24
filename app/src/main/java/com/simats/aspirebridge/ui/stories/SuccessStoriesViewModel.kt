@@ -7,16 +7,13 @@ import com.simats.aspirebridge.data.model.SuccessStory
 import com.simats.aspirebridge.data.model.SuccessStoryFilter
 import com.simats.aspirebridge.data.repository.ExamRepository
 import com.simats.aspirebridge.data.repository.SuccessStoryRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 /**
  * ViewModel for Success Stories screen
  */
-@HiltViewModel
-class SuccessStoriesViewModel @Inject constructor(
+class SuccessStoriesViewModel(
     private val successStoryRepository: SuccessStoryRepository,
     private val examRepository: ExamRepository
 ) : ViewModel() {

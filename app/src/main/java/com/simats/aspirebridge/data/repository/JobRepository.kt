@@ -1,12 +1,12 @@
 package com.simats.aspirebridge.data.repository
 
 import com.simats.aspirebridge.R
+import com.simats.aspirebridge.data.api.ApiService
 import com.simats.aspirebridge.data.model.*
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class JobRepository @Inject constructor() {
+class JobRepository(
+    private val apiService: ApiService
+) {
 
     fun getCentralGovernmentCategories(): List<JobCategory> {
         return listOf(

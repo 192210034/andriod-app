@@ -7,21 +7,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.simats.aspirebridge.MentorshipApplication
 import com.simats.aspirebridge.R
 import com.simats.aspirebridge.data.manager.UserSessionManager
 import com.simats.aspirebridge.data.model.UserType
 import com.simats.aspirebridge.databinding.FragmentAdminLoginBinding
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 /**
  * Admin login fragment for platform administration
  */
-@AndroidEntryPoint
 class AdminLoginFragment : Fragment() {
     
-    @Inject
-    lateinit var userSessionManager: UserSessionManager
+    private lateinit var userSessionManager: UserSessionManager
     
     private var _binding: FragmentAdminLoginBinding? = null
     private val binding get() = _binding!!
@@ -41,6 +38,11 @@ class AdminLoginFragment : Fragment() {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        // Initialize dependencies
+        val dependencyContainer = (requireActivity().application as MentorshipApplication).container
+        userSessionManager = dependencyContainer.userSessionManager
+        
         setupClickListeners()
     }
     
