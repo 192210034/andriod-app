@@ -7,6 +7,7 @@ import com.simats.aspirebridge.data.model.UserType
 import com.simats.aspirebridge.data.model.Session
 import com.simats.aspirebridge.data.model.BookingRequest
 import com.simats.aspirebridge.data.model.Wallet
+import com.simats.aspirebridge.data.model.MentorProfile
 import com.simats.aspirebridge.data.repository.ResourceRepository
 import com.simats.aspirebridge.data.repository.SuccessStoryRepository
 import kotlinx.coroutines.flow.*
@@ -24,8 +25,8 @@ class HomeViewModel(
     private val _recentSuccessStories = MutableStateFlow<List<SuccessStory>>(emptyList())
     val recentSuccessStories: StateFlow<List<SuccessStory>> = _recentSuccessStories.asStateFlow()
 
-    private val _featuredMentors = MutableStateFlow<List<Any>>(emptyList()) // TODO: Replace with MentorProfile
-    val featuredMentors: StateFlow<List<Any>> = _featuredMentors.asStateFlow()
+    private val _featuredMentors = MutableStateFlow<List<MentorProfile>>(emptyList())
+    val featuredMentors: StateFlow<List<MentorProfile>> = _featuredMentors.asStateFlow()
 
     private val _resourceCount = MutableStateFlow(0)
     val resourceCount: StateFlow<Int> = _resourceCount.asStateFlow()

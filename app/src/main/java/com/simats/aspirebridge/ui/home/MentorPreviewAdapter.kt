@@ -5,15 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.simats.aspirebridge.data.model.MentorProfile
 import com.simats.aspirebridge.databinding.ItemMentorCardBinding
 
 /**
  * Adapter for displaying mentor previews in home screen
- * TODO: Replace Any with proper MentorProfile model when available
  */
 class MentorPreviewAdapter(
-    private val onMentorClick: (Any) -> Unit
-) : ListAdapter<Any, MentorPreviewAdapter.MentorViewHolder>(MentorDiffCallback()) {
+    private val onMentorClick: (MentorProfile) -> Unit
+) : ListAdapter<MentorProfile, MentorPreviewAdapter.MentorViewHolder>(MentorDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MentorViewHolder {
         val binding = ItemMentorCardBinding.inflate(
@@ -32,9 +32,9 @@ class MentorPreviewAdapter(
         private val binding: ItemMentorCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(mentor: Any) {
+        fun bind(mentor: MentorProfile) {
             with(binding) {
-                // TODO: Implement mentor binding when MentorProfile model is available
+                // TODO: Implement mentor binding when layout is available
                 // For now, show placeholder data
                 
                 // Click listeners
@@ -43,14 +43,12 @@ class MentorPreviewAdapter(
         }
     }
 
-    private class MentorDiffCallback : DiffUtil.ItemCallback<Any>() {
-        override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
-            // TODO: Implement proper comparison when MentorProfile model is available
-            return oldItem == newItem
+    private class MentorDiffCallback : DiffUtil.ItemCallback<MentorProfile>() {
+        override fun areItemsTheSame(oldItem: MentorProfile, newItem: MentorProfile): Boolean {
+            return oldItem.userId == newItem.userId
         }
 
-        override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
-            // TODO: Implement proper comparison when MentorProfile model is available
+        override fun areContentsTheSame(oldItem: MentorProfile, newItem: MentorProfile): Boolean {
             return oldItem == newItem
         }
     }
