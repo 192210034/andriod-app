@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="12dp">
+
+    <!-- Chat Avatar -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/avatarContainer"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/ivChatAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/circle_background"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_person"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Online Status Indicator -->
+        <View
+            android:id="@+id/ivOnlineStatus"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/online_status_background"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Chat Name -->
+    <TextView
+        android:id="@+id/tvChatName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tvTimestamp"
+        app:layout_constraintStart_toEndOf="@+id/avatarContainer"
+        app:layout_constraintTop_toTopOf="@+id/avatarContainer"
+        tools:text="Rajesh Kumar" />
+
+    <!-- Last Message -->
+    <TextView
+        android:id="@+id/tvLastMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvUnreadCount"
+        app:layout_constraintStart_toEndOf="@+id/avatarContainer"
+        app:layout_constraintTop_toBottomOf="@+id/tvChatName"
+        tools:text="Hi! I'm ready for our session tomorrow. Do you have any specific topics you'd like to focus on?" />
+
+    <!-- Timestamp -->
+    <TextView
+        android:id="@+id/tvTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_hint"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvChatName"
+        tools:text="10:30" />
+
+    <!-- Unread Count Badge -->
+    <TextView
+        android:id="@+id/tvUnreadCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/unread_badge_background"
+        android:minWidth="20dp"
+        android:paddingHorizontal="6dp"
+        android:paddingVertical="2dp"
+        android:textAlignment="center"
+        android:textColor="@color/text_on_primary"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTimestamp"
+        tools:text="2"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

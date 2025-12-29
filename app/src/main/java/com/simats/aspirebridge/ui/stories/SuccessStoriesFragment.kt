@@ -60,20 +60,21 @@ class SuccessStoriesFragment : Fragment() {
         // Setup RecyclerView
         storiesAdapter = SuccessStoriesAdapter(
             onStoryClick = { story ->
-                // Navigate to story detail
-                val bundle = Bundle().apply {
-                    putString("storyId", story.id)
-                }
-                findNavController().navigate(R.id.action_success_stories_to_story_detail, bundle)
+                // TODO: Navigate to story detail
+                // val bundle = Bundle().apply {
+                //     putString("storyId", story.id)
+                // }
+                // findNavController().navigate(R.id.action_success_stories_to_story_detail, bundle)
             },
             onLikeClick = { story ->
                 viewModel.likeStory(story.id)
             },
             onCommentClick = { story ->
-                val bundle = Bundle().apply {
-                    putString("storyId", story.id)
-                }
-                findNavController().navigate(R.id.action_success_stories_to_story_detail, bundle)
+                // TODO: Navigate to story detail
+                // val bundle = Bundle().apply {
+                //     putString("storyId", story.id)
+                // }
+                // findNavController().navigate(R.id.action_success_stories_to_story_detail, bundle)
             },
             onShareClick = { story ->
                 viewModel.shareStory(story.id)
@@ -119,8 +120,8 @@ class SuccessStoriesFragment : Fragment() {
         }
         
         binding.fabAddStory.setOnClickListener {
-            // Navigate to create story screen
-            findNavController().navigate(R.id.action_success_stories_to_create_story)
+            // TODO: Navigate to create story screen
+            // findNavController().navigate(R.id.action_success_stories_to_create_story)
         }
         
         // Setup tab selection listener

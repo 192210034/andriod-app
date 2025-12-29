@@ -3,8 +3,10 @@ package com.simats.aspirebridge.di
 import android.content.Context
 import com.simats.aspirebridge.data.api.ApiService
 import com.simats.aspirebridge.data.manager.UserSessionManager
+import com.simats.aspirebridge.data.repository.ChatRepository
 import com.simats.aspirebridge.data.repository.ExamRepository
 import com.simats.aspirebridge.data.repository.JobRepository
+import com.simats.aspirebridge.data.repository.MentorRepository
 import com.simats.aspirebridge.data.repository.ResourceRepository
 import com.simats.aspirebridge.data.repository.SuccessStoryRepository
 import okhttp3.OkHttpClient
@@ -18,6 +20,17 @@ import java.util.concurrent.TimeUnit
  * Manages all application dependencies using lazy initialization
  */
 class DependencyContainer(private val context: Context) {
+    
+    companion object {
+        @Volatile
+        private var INSTANCE: DependencyContainer? = null
+        
+        fun getInstance(context: Context): DependencyContainer {
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: DependencyContainer(context.applicationContext).also { INSTANCE = it }
+            }
+        }
+    }
     
     // Network layer
     private val okHttpClient: OkHttpClient by lazy {
@@ -65,5 +78,13 @@ class DependencyContainer(private val context: Context) {
     
     val examRepository: ExamRepository by lazy {
         ExamRepository(apiService)
+    }
+    
+    val mentorRepository: MentorRepository by lazy {
+        MentorRepository()
+    }
+    
+    val chatRepository: ChatRepository by lazy {
+        ChatRepository()
     }
 }

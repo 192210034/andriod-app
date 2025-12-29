@@ -1,5 +1,6 @@
 package com.simats.aspirebridge.ui.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.simats.aspirebridge.R
 import com.simats.aspirebridge.databinding.FragmentOnboardingBinding
+import com.simats.aspirebridge.ui.main.MainActivity
 
 class OnboardingFragment : Fragment() {
 
@@ -41,7 +43,11 @@ class OnboardingFragment : Fragment() {
     }
 
     private fun navigateToMain() {
-        findNavController().navigate(R.id.action_onboarding_to_main)
+        // Navigate to MainActivity
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        requireActivity().finish()
     }
 
     override fun onDestroyView() {

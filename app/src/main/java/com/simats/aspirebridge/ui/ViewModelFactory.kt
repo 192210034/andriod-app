@@ -6,7 +6,11 @@ import com.simats.aspirebridge.di.DependencyContainer
 import com.simats.aspirebridge.ui.admin.AdminContentManagementViewModel
 import com.simats.aspirebridge.ui.admin.AdminDashboardViewModel
 import com.simats.aspirebridge.ui.admin.AdminUserManagementViewModel
+import com.simats.aspirebridge.ui.booking.BookSessionViewModel
+import com.simats.aspirebridge.ui.chat.ChatListViewModel
 import com.simats.aspirebridge.ui.home.HomeViewModel
+import com.simats.aspirebridge.ui.mentors.BrowseMentorsViewModel
+import com.simats.aspirebridge.ui.mentors.MentorProfileViewModel
 import com.simats.aspirebridge.ui.resources.ResourceHubViewModel
 import com.simats.aspirebridge.ui.stories.SuccessStoriesViewModel
 
@@ -45,6 +49,22 @@ class ViewModelFactory(private val container: DependencyContainer) : ViewModelPr
             ) as T
             
             AdminUserManagementViewModel::class.java -> AdminUserManagementViewModel() as T
+            
+            BrowseMentorsViewModel::class.java -> BrowseMentorsViewModel(
+                container.mentorRepository
+            ) as T
+            
+            MentorProfileViewModel::class.java -> MentorProfileViewModel(
+                container.mentorRepository
+            ) as T
+            
+            BookSessionViewModel::class.java -> BookSessionViewModel(
+                container.mentorRepository
+            ) as T
+            
+            ChatListViewModel::class.java -> ChatListViewModel(
+                container.chatRepository
+            ) as T
             
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

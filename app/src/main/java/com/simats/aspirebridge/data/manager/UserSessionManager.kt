@@ -44,6 +44,10 @@ class UserSessionManager(private val context: Context) {
         return getCurrentUserType() == UserType.ASPIRANT
     }
     
+    fun isLoggedIn(): Boolean {
+        return _isLoggedIn.value
+    }
+    
     fun setCurrentUser(user: User) {
         _currentUser.value = user
         _isLoggedIn.value = true

@@ -5,16 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
+import com.simats.aspirebridge.MentorshipApplication
 import com.simats.aspirebridge.R
 import com.simats.aspirebridge.data.model.UserType
 import com.simats.aspirebridge.data.manager.UserSessionManager
 import com.simats.aspirebridge.databinding.FragmentAspirantDashboardBinding
 import com.simats.aspirebridge.databinding.FragmentAchieverDashboardBinding
+import com.simats.aspirebridge.ui.ViewModelFactory
 import kotlinx.coroutines.launch
 
 /**
@@ -29,7 +31,7 @@ class HomeFragment : Fragment() {
     private val aspirantBinding get() = _aspirantBinding!!
     private val achieverBinding get() = _achieverBinding!!
     
-    private val viewModel: HomeViewModel by viewModels()
+    private lateinit var viewModel: HomeViewModel
     private lateinit var successStoriesAdapter: SuccessStoryPreviewAdapter
     private lateinit var mentorsAdapter: MentorPreviewAdapter
     
@@ -71,6 +73,12 @@ class HomeFragment : Fragment() {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        
+        // Initialize ViewModel with factory
+        val dependencyContainer = (requireActivity().application as MentorshipApplication).container
+        val factory = ViewModelFactory(dependencyContainer)
+        viewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
+        
         val currentUserType = userSessionManager.getCurrentUserType()
         
         // Skip setup if admin (already navigated away)
@@ -120,7 +128,8 @@ class HomeFragment : Fragment() {
     
     private fun setupAspirantClickListeners() {
         aspirantBinding.btnNotifications.setOnClickListener {
-            findNavController().navigate(R.id.action_home_to_notifications)
+            // TODO: Navigate to notifications screen
+            // findNavController().navigate(R.id.action_home_to_notifications)
         }
         
         aspirantBinding.btnViewAllSessions.setOnClickListener {
@@ -132,7 +141,7 @@ class HomeFragment : Fragment() {
         }
         
         aspirantBinding.btnFindMentor.setOnClickListener {
-            findNavController().navigate(R.id.nav_search)
+            findNavController().navigate(R.id.action_home_to_browse_mentors)
         }
         
         aspirantBinding.btnScheduleSession.setOnClickListener {
@@ -174,7 +183,8 @@ class HomeFragment : Fragment() {
     
     private fun setupAchieverClickListeners() {
         achieverBinding.btnNotifications.setOnClickListener {
-            findNavController().navigate(R.id.action_home_to_notifications)
+            // TODO: Navigate to notifications screen
+            // findNavController().navigate(R.id.action_home_to_notifications)
         }
         
         achieverBinding.btnViewAllSessions.setOnClickListener {
@@ -255,19 +265,19 @@ class HomeFragment : Fragment() {
         
         // Observe common data
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.recentSuccessStories.collect { stories ->
+            viewModel.recentSuccessStories.collect { _ ->
                 // Success stories are shown in both dashboards through quick access
             }
         }
         
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.featuredMentors.collect { mentors ->
+            viewModel.featuredMentors.collect { _ ->
                 // Mentors are relevant for aspirants primarily
             }
         }
         
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.resourceCount.collect { count ->
+            viewModel.resourceCount.collect { _ ->
                 // Resource count is shown in both dashboards
             }
         }
@@ -275,7 +285,7 @@ class HomeFragment : Fragment() {
         // Observe role-specific data
         if (currentUserType == UserType.ASPIRANT) {
             viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.upcomingSessions.collect { sessions ->
+                viewModel.upcomingSessions.collect { _ ->
                     // Update upcoming sessions UI
                 }
             }

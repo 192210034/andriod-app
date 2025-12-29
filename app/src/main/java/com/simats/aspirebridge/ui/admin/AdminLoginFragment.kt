@@ -1,5 +1,6 @@
 package com.simats.aspirebridge.ui.admin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.simats.aspirebridge.R
 import com.simats.aspirebridge.data.manager.UserSessionManager
 import com.simats.aspirebridge.data.model.UserType
 import com.simats.aspirebridge.databinding.FragmentAdminLoginBinding
+import com.simats.aspirebridge.ui.main.MainActivity
 
 /**
  * Admin login fragment for platform administration
@@ -86,8 +88,8 @@ class AdminLoginFragment : Fragment() {
                 userSessionManager.setMockUser(UserType.ADMIN)
                 Toast.makeText(requireContext(), "Admin login successful", Toast.LENGTH_SHORT).show()
                 
-                // Navigate to admin dashboard
-                findNavController().navigate(R.id.action_admin_login_to_admin_dashboard)
+                // Navigate to MainActivity (which will show admin dashboard)
+                navigateToMainApp()
             } else {
                 // Login failed
                 Toast.makeText(requireContext(), "Invalid admin credentials", Toast.LENGTH_SHORT).show()
@@ -98,6 +100,14 @@ class AdminLoginFragment : Fragment() {
             binding.progressLoading.visibility = View.GONE
             binding.btnAdminLogin.isEnabled = true
         }, 1500)
+    }
+    
+    private fun navigateToMainApp() {
+        // Navigate to MainActivity
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        requireActivity().finish()
     }
     
     override fun onDestroyView() {

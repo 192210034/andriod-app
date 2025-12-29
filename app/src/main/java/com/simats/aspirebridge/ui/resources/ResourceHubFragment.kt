@@ -61,11 +61,11 @@ class ResourceHubFragment : Fragment() {
         // Setup RecyclerView
         resourcesAdapter = ResourcesAdapter(
             onResourceClick = { resource ->
-                // Navigate to resource detail
-                val bundle = Bundle().apply {
-                    putString("resourceId", resource.id)
-                }
-                findNavController().navigate(R.id.action_resource_hub_to_resource_detail, bundle)
+                // TODO: Navigate to resource detail
+                // val bundle = Bundle().apply {
+                //     putString("resourceId", resource.id)
+                // }
+                // findNavController().navigate(R.id.action_resource_hub_to_resource_detail, bundle)
             },
             onDownloadClick = { resource ->
                 viewModel.downloadResource(resource.id)
@@ -103,8 +103,8 @@ class ResourceHubFragment : Fragment() {
         }
         
         binding.fabUploadResource.setOnClickListener {
-            // Navigate to upload resource screen
-            findNavController().navigate(R.id.action_resource_hub_to_upload_resource)
+            // TODO: Navigate to upload resource screen
+            // findNavController().navigate(R.id.action_resource_hub_to_upload_resource)
         }
         
         // Setup tab selection listener

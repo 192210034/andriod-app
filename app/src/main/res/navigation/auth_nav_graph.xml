@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <!-- Authentication Flow -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.simats.aspirebridge.ui.auth.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_to_user_type_selection"
+            app:destination="@id/userTypeSelectionFragment" />
+        <action
+            android:id="@+id/action_login_to_forgot_password"
+            app:destination="@id/forgotPasswordFragment" />
+        <action
+            android:id="@+id/action_login_to_admin_login"
+            app:destination="@id/adminLoginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userTypeSelectionFragment"
+        android:name="com.simats.aspirebridge.ui.auth.UserTypeSelectionFragment"
+        android:label="User Type Selection"
+        tools:layout="@layout/fragment_user_type_selection">
+        <action
+            android:id="@+id/action_user_type_selection_to_login"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_user_type_selection_to_register_aspirant"
+            app:destination="@id/registerAspirantFragment" />
+        <action
+            android:id="@+id/action_user_type_selection_to_register_achiever"
+            app:destination="@id/registerAchieverFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerAspirantFragment"
+        android:name="com.simats.aspirebridge.ui.auth.RegisterAspirantFragment"
+        android:label="Register Aspirant"
+        tools:layout="@layout/fragment_register_aspirant">
+        <action
+            android:id="@+id/action_register_aspirant_to_otp_verification"
+            app:destination="@id/otpVerificationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerAchieverFragment"
+        android:name="com.simats.aspirebridge.ui.auth.RegisterAchieverFragment"
+        android:label="Register Achiever"
+        tools:layout="@layout/fragment_register_achiever">
+        <action
+            android:id="@+id/action_register_achiever_to_otp_verification"
+            app:destination="@id/otpVerificationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/otpVerificationFragment"
+        android:name="com.simats.aspirebridge.ui.auth.OtpVerificationFragment"
+        android:label="OTP Verification"
+        tools:layout="@layout/fragment_otp_verification">
+        <action
+            android:id="@+id/action_otp_verification_to_onboarding"
+            app:destination="@id/onboardingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/onboardingFragment"
+        android:name="com.simats.aspirebridge.ui.auth.OnboardingFragment"
+        android:label="Onboarding"
+        tools:layout="@layout/fragment_onboarding" />
+
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.simats.aspirebridge.ui.auth.ForgotPasswordFragment"
+        android:label="Forgot Password"
+        tools:layout="@layout/fragment_forgot_password" />
+
+    <fragment
+        android:id="@+id/profileSetupFragment"
+        android:name="com.simats.aspirebridge.ui.profile.ProfileSetupFragment"
+        android:label="Profile Setup"
+        tools:layout="@layout/fragment_profile_setup" />
+
+    <!-- Admin Login -->
+    <fragment
+        android:id="@+id/adminLoginFragment"
+        android:name="com.simats.aspirebridge.ui.admin.AdminLoginFragment"
+        android:label="Admin Login"
+        tools:layout="@layout/fragment_admin_login" />
+
+</navigation>

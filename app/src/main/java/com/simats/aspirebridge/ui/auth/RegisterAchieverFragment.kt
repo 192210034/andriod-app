@@ -23,9 +23,10 @@ class RegisterAchieverFragment : Fragment() {
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             // Handle selected image
-            val imageUri = result.data?.data
-            // TODO: Process the selected image
-            binding.btnUploadScorecard.text = "Score Card Uploaded ✓"
+            result.data?.data?.let {
+                // TODO: Process the selected image
+                binding.btnUploadScorecard.text = "Score Card Uploaded ✓"
+            }
         }
     }
 

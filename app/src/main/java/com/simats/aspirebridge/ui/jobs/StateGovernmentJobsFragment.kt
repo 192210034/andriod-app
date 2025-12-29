@@ -93,9 +93,10 @@ class StateGovernmentJobsFragment : Fragment() {
         }
     }
 
-    private fun navigateToJobCategory(categoryName: String, categoryId: String) {
+    private fun navigateToJobCategory(@Suppress("UNUSED_PARAMETER") categoryName: String, @Suppress("UNUSED_PARAMETER") categoryId: String) {
         // TODO: Navigate to specific job category with jobs list
         // For now, navigate to job details as placeholder
+        // Parameters will be used when implementing job category navigation
         findNavController().navigate(R.id.action_state_jobs_to_job_details)
     }
 

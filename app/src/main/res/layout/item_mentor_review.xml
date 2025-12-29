@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:orientation="vertical">
+
+    <!-- Reviewer Info -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal">
+
+        <!-- Reviewer Avatar -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="12dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/border_light"
+            app:strokeWidth="1dp">
+
+            <ImageView
+                android:id="@+id/ivReviewerPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_person"
+                tools:src="@drawable/ic_person" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Reviewer Name and Rating -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvReviewerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="Rahul Verma" />
+
+            <!-- Rating Stars -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="2dp"
+                    android:src="@drawable/ic_star"
+                    android:tint="@color/rating_star" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="2dp"
+                    android:src="@drawable/ic_star"
+                    android:tint="@color/rating_star" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="2dp"
+                    android:src="@drawable/ic_star"
+                    android:tint="@color/rating_star" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="2dp"
+                    android:src="@drawable/ic_star"
+                    android:tint="@color/rating_star" />
+
+                <ImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginEnd="8dp"
+                    android:src="@drawable/ic_star"
+                    android:tint="@color/rating_star" />
+
+                <TextView
+                    android:id="@+id/tvRatingValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    tools:text="5.0" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Review Date -->
+        <TextView
+            android:id="@+id/tvReviewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_secondary"
+            android:textSize="10sp"
+            tools:text="2 days ago" />
+
+    </LinearLayout>
+
+    <!-- Review Text -->
+    <TextView
+        android:id="@+id/tvReviewText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="2dp"
+        android:textColor="@color/text_secondary"
+        android:textSize="13sp"
+        tools:text="Excellent mentor! Very knowledgeable and patient. Helped me clear my doubts effectively. The session was well-structured and informative." />
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/divider" />
+
+</LinearLayout>

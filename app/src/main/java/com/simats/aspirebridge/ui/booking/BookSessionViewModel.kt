@@ -1,0 +1,170 @@
+package com.simats.aspirebridge.ui.booking
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.simats.aspirebridge.data.model.*
+import com.simats.aspirebridge.data.repository.MentorRepository
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
+
+class BookSessionViewModel(
+    private val mentorRepository: MentorRepository
+) : ViewModel() {
+
+    private val _mentor = MutableLiveData<Mentor?>()
+    val mentor: LiveData<Mentor?> = _mentor
+
+    private val _availableSlots = MutableLiveData<List<AvailabilitySlot>>()
+    val availableSlots: LiveData<List<AvailabilitySlot>> = _availableSlots
+
+    private val _selectedSlot = MutableLiveData<AvailabilitySlot?>()
+    val selectedSlot: LiveData<AvailabilitySlot?> = _selectedSlot
+
+    private val _selectedDuration = MutableLiveData<Int>()
+    val selectedDuration: LiveData<Int> = _selectedDuration
+
+    private val _totalAmount = MutableLiveData<Int>()
+    val totalAmount: LiveData<Int> = _totalAmount
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _error = MutableLiveData<String?>()
+    val error: LiveData<String?> = _error
+
+    private val _bookingSuccess = MutableLiveData<BookingRequest?>()
+    val bookingSuccess: LiveData<BookingRequest?> = _bookingSuccess
+
+    init {
+        _selectedDuration.value = 60 // Default 1 hour
+    }
+
+    fun loadMentorAndSlots(mentorId: String) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _error.value = null
+
+                // Load mentor details
+                val mentorData = mentorRepository.getMentorById(mentorId)
+                _mentor.value = mentorData
+
+                // Load available slots
+                loadAvailableSlots(mentorId)
+
+                // Calculate initial amount
+                calculateTotalAmount()
+
+            } catch (e: Exception) {
+                _error.value = e.message ?: "Failed to load booking data"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    private suspend fun loadAvailableSlots(mentorId: String) {
+        // Generate mock available slots for the next 7 days
+        val slots = mutableListOf<AvailabilitySlot>()
+        val calendar = Calendar.getInstance()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        for (day in 0..6) {
+            val date = dateFormat.format(calendar.time)
+            
+            // Morning slots
+            slots.add(AvailabilitySlot("${mentorId}_${day}_09", mentorId, date, "09:00", "10:00"))
+            slots.add(AvailabilitySlot("${mentorId}_${day}_10", mentorId, date, "10:00", "11:00"))
+            slots.add(AvailabilitySlot("${mentorId}_${day}_11", mentorId, date, "11:00", "12:00"))
+            
+            // Afternoon slots
+            slots.add(AvailabilitySlot("${mentorId}_${day}_14", mentorId, date, "14:00", "15:00"))
+            slots.add(AvailabilitySlot("${mentorId}_${day}_15", mentorId, date, "15:00", "16:00"))
+            slots.add(AvailabilitySlot("${mentorId}_${day}_16", mentorId, date, "16:00", "17:00"))
+            
+            // Evening slots
+            slots.add(AvailabilitySlot("${mentorId}_${day}_18", mentorId, date, "18:00", "19:00"))
+            slots.add(AvailabilitySlot("${mentorId}_${day}_19", mentorId, date, "19:00", "20:00"))
+            
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+
+        _availableSlots.value = slots
+    }
+
+    fun selectSlot(slot: AvailabilitySlot) {
+        _selectedSlot.value = slot
+        calculateTotalAmount()
+    }
+
+    fun selectDuration(duration: Int) {
+        _selectedDuration.value = duration
+        calculateTotalAmount()
+    }
+
+    private fun calculateTotalAmount() {
+        val mentor = _mentor.value
+        val duration = _selectedDuration.value ?: 60
+        
+        if (mentor != null) {
+            val hourlyRate = mentor.hourlyRate
+            val hours = duration / 60.0
+            val amount = (hourlyRate * hours).toInt()
+            _totalAmount.value = amount
+        }
+    }
+
+    fun bookSession(message: String) {
+        val mentor = _mentor.value
+        val slot = _selectedSlot.value
+        val duration = _selectedDuration.value
+        val amount = _totalAmount.value
+
+        if (mentor == null || slot == null || duration == null || amount == null) {
+            _error.value = "Please select all required fields"
+            return
+        }
+
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                _error.value = null
+
+                val bookingRequest = BookingRequest(
+                    id = "", // Will be generated by backend
+                    mentorId = mentor.id,
+                    studentId = "current_user_id", // TODO: Get from session
+                    studentName = "Current User", // TODO: Get from session
+                    studentEmail = "user@example.com", // TODO: Get from session
+                    date = slot.date,
+                    time = slot.startTime,
+                    duration = duration,
+                    message = message,
+                    amount = amount,
+                    status = BookingStatus.PENDING,
+                    createdAt = "",
+                    updatedAt = ""
+                )
+
+                val result = mentorRepository.bookSession(bookingRequest)
+                _bookingSuccess.value = result
+
+            } catch (e: Exception) {
+                _error.value = e.message ?: "Failed to book session"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun clearError() {
+        _error.value = null
+    }
+
+    fun clearBookingSuccess() {
+        _bookingSuccess.value = null
+    }
+}
